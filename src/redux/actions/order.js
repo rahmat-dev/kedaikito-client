@@ -5,6 +5,7 @@ export const addOrder = (item, transactionId) => {
             menuId: item.id,
             transactionId,
             name: item.name,
+            image: item.image,
             qty: 1,
             pricePerItem: item.price,
             totalPrice: item.price,

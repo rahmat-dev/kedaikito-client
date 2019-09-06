@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { View, Text, Image, TouchableOpacity, TouchableHighlight, Modal, ScrollView, StyleSheet } from 'react-native';
-import { Container, Header, Button, Content, Right, Footer } from 'native-base';
-// import { Button } from 'react-native-paper';
+import { Container, Header, Button, Content, Body, Left, Right, ListItem } from 'native-base';
+import { List } from 'react-native-paper';
 import { connect } from 'react-redux';
 import AsyncStorage from '@react-native-community/async-storage';
 import Axios from 'axios';
@@ -56,22 +56,27 @@ class ChooseMenu extends Component {
     }
 
     addOrderItem = (item, transactionId) => {
-        // this.props.orders.data.filter(order => {
-        //     if (order != null && order.menuId == item.id) {
-        //         return this.handleAddQuantity(item.id)
-        //     }
-        // })
+        const dataOrder = this.props.orders.data.filter(order => {
+            if (order.menuId == item.id) 
+                return true
+        })
         
-        this.props.addOrder(item, transactionId)
-        this.props.getOrder()
-
-        // console.log(this.props.orders.data)
+        console.log(dataOrder)
+        if (dataOrder.length == 0) {
+            return this.props.addOrder(item, transactionId)
+        } else {
+            return this.handleAddQuantity(item.id)
+        }
     }
 
-    removeOrderItem = (index) => {
-        this.props.removeOrder(index)
+    removeOrderItem = (menuId, qty, index) => {
+        if (qty === 1) {
+            this.props.orders.data.splice(index, 1)
+        } else {
+            this.handleRemoveQuantity(menuId)
+        }
+
         this.props.getOrder()
-        console.log(this.props.orders.data)
     }
 
     handleAddQuantity = (menuId) => {
@@ -95,6 +100,7 @@ class ChooseMenu extends Component {
     calculateTransaction = async (transactionId, tableNumber) => {
         let subTotal = 0;
 
+        this.props.getOrder()
         this.props.orders.data.map(item => {
             subTotal += item.totalPrice
         })
@@ -235,7 +241,7 @@ class ChooseMenu extends Component {
                     </View>
                 </Header>
 
-                <View style={{padding: 8, flex: 1}}>
+                <View style={{padding: 16, flex: 1}}>
                     {/* Categories */}
                     <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', marginBottom: 8}}>
                         <TouchableOpacity onPress={() => this.handleMenuByCategory(null)} style={categoryActive == null ? styles.categoryActive : null}>
@@ -250,25 +256,44 @@ class ChooseMenu extends Component {
 
                     <Content style={{flex: 1}}>
                         {/* Menus */}
-                        <View style={{ flexDirection: 'row', flexWrap: 'wrap', justifyContent: 'space-between' }}>
+                        {/* <List> */}
                             {/* All Menus */}
                             {this.props.menus.isLoading == false && this.props.menus.isCategory != true && this.props.menus.data.map((item, index) => (
-                                <TouchableOpacity key={index}
-                                    style={[styles.menu, {borderColor: 'black'}]}
+                                // <ListItem key={index}
+                                //     style={{marginLeft: 0}}
+                                //     onPress={() => this.addOrderItem(item, transactionId)}
+                                // >
+                                //     <Left style={{backgroundColor: 'red', marginEnd: 0}}>
+                                //         <Image source={{ uri: item.image }} style={{width: 100, height: 70}} />
+                                //     </Left>
+                                //     <Body>
+                                //         <Text style={{textTransform: 'capitalize'}}>{item.name}</Text>
+                                //         <Text>{item.price}</Text>
+                                //     </Body>
+                                //     <Right />
+                                // </ListItem>
+                                <List.Item
+                                    title={item.name}
+                                    titleStyle={{top: 0}}
+                                    description={props => <Text>{item.price}</Text>}
+                                    left={props => <Image source={{ uri: item.image }} style={{width: 60, height: 60}} />}
+                                    style={{marginVertical: 4}}
+                                    key={index}
                                     onPress={() => this.addOrderItem(item, transactionId)}
-                                >
-                                    <Image source={{ uri: `${config.IMAGE_URL}/${item.name}.png` }} style={{width: 50, height: 50}} />
-                                    <Text style={{textTransform: 'capitalize'}}>{item.name}</Text>
-                                    <Text>{item.price}</Text>
-                                </TouchableOpacity>
+                                />
                             ))}
 
                             {/* Menus By Category */}
                             {this.props.menus.isCategory == true && this.props.menus.dataByCategory.map((item, index) => (
-                                <TouchableOpacity style={styles.menu} key={index} onPress={() => this.addOrderItem(item, tableNumber)}>
-                                    <Image source={{ uri: `${config.IMAGE_URL}/${item.name}.png` }} style={{width: 50, height: 50}} />
-                                    <Text style={{textTransform: 'capitalize'}}>{item.name}</Text>
-                                    <Text>{item.price}</Text>
+                                <TouchableOpacity key={index}
+                                    style={[styles.menu, {borderColor: 'black'}]}
+                                    onPress={() => this.addOrderItem(item, transactionId)}
+                                >
+                                    <Image source={{ uri: item.image }} style={{width: 50, height: 50}} />
+                                    <View>
+                                        <Text style={{textTransform: 'capitalize'}}>{item.name}</Text>
+                                        <Text>{item.price}</Text>
+                                    </View>
                                 </TouchableOpacity>
                             ))}
 
@@ -276,7 +301,7 @@ class ChooseMenu extends Component {
                             {this.props.menus.isCategory == true && this.props.menus.dataByCategory.length == 0 ? (
                                 <Text style={{color: 'red', fontStyle: 'italic'}}>Tidak ada menu</Text>
                             ) : null}
-                        </View>
+                        {/* </List> */}
                     </Content>
                     
                     <View>
@@ -284,13 +309,12 @@ class ChooseMenu extends Component {
                             {this.props.orders.data.map((item, index) =>
                                 <View style={{width: 80, alignItems: 'center', marginHorizontal: 4, marginVertical: 12}} key={index}>
                                     <Image
-                                        source={{uri: `${config.IMAGE_URL}/${item.name}.png`}}
+                                        source={{uri: item.image}}
                                         style={{width: 40, height: 40}}
-                                        // onPress={() => this.removeOrderItem(item.id)}
                                     />
                                     <Text style={{textTransform: 'capitalize'}}>{item.name}</Text>
                                     <View style={{flexDirection: 'row', marginTop: 8}}>
-                                        <Button style={{width: 20, height: 20, justifyContent: 'center', backgroundColor: 'white'}} onPress={() => this.handleRemoveQuantity(item.menuId)}>
+                                        <Button style={{width: 20, height: 20, justifyContent: 'center', backgroundColor: 'white'}} onPress={() => this.removeOrderItem(item.menuId, item.qty, index)}>
                                             <Text style={{fontWeight: 'bold'}}>-</Text>
                                         </Button>
                                         <Text style={{width: 30, textAlign: 'center'}}>{item.qty}</Text>
@@ -371,13 +395,11 @@ const styles = StyleSheet.create({
         borderRadius: 50,
     },
     menu: {
-        width: '32%',
-        padding: 8,
+        // padding: 8,
         borderWidth: 1,
-        borderRadius: 4,
-        margin: '.5%',
-        justifyContent: 'center',
-        alignItems: 'center',
+        // borderRadius: 4,
+        marginVertical: 8,
+        flexDirection: 'row'
     }
 })
 
