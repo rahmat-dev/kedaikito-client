@@ -9,7 +9,7 @@ This project is still on very early development stage. If you want to use for pr
 ## Screenshots
 
 <p float="left">
-<img src="https://res.cloudinary.com/dt6vzvugc/image/upload/v1567741336/Dashboard.jpg" width="200" height="350" alt="ShopIn"/>
+<img src="https://res.cloudinary.com/dt6vzvugc/image/upload/v1567741336/Dashboard.jpg" width="240" height="360" alt="ShopIn"/>
 </p>
 
 ## Features
