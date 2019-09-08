@@ -135,6 +135,105 @@ class ChooseMenu extends Component {
 
         return (
             <Container>
+                {/* Confirm Modal */}
+                <Modal
+                    animationType="fade"
+                    transparent={true}
+                    visible={this.state.confirmVisible}
+                    onRequestClose={() => {
+                        Alert.alert('Modal has been closed.');
+                    }}>
+                    <View style={{flex: 1, justifyContent: 'center', alignItems: 'center', backgroundColor: 'rgba(0, 0, 0, .5)'}}>
+                        <View style={{width: '60%', backgroundColor: 'white', justifyContent: 'center', alignItems: 'center', borderRadius: 12, overflow: 'hidden', borderWidth: 1, padding: 12}}>
+                            <Text style={{fontWeight: 'bold', width: '100%', textAlign: 'center', fontSize: 18, marginBottom: 8}}>Confirm Order</Text>
+                            <Text>Are you sure to order this?</Text>
+
+                            <View style={{flexDirection: 'row', marginTop: 16, justifyContent: 'space-between'}}>
+                                <TouchableHighlight
+                                    onPress={() => {
+                                        this.showConfirmModal(!this.state.confirmVisible);
+                                    }}
+                                    style={{flex: 1, alignItems: 'center'}}>
+                                    <Text style={{color: theme.colors.primary}}>No</Text>
+                                </TouchableHighlight>
+                                <TouchableHighlight
+                                    onPress={() => {
+                                        this.setState({viewBillDisabled: false})
+                                        this.showConfirmModal(!this.state.confirmVisible);
+                                        this.calculateTransaction(transactionId, tableNumber)
+                                    }}
+                                    style={{flex: 1, alignItems: 'center'}}>
+                                    <Text style={{color: theme.colors.primary}}>Yes</Text>
+                                </TouchableHighlight>
+                            </View>
+                        </View>
+                    </View>
+                </Modal>
+
+                {/* <Modal
+                    animationType='fade'
+                    transparent={true}
+                    visible={this.state.viewBillVisible}
+                >
+                    <View style={{flex: 1, backgroundColor: 'rgba(0,0,0,.5)', padding: 16, justifyContent: 'center'}}>
+                        <View style={{flex: 1, backgroundColor: 'white', position: 'relative'}}>
+                            <Header style={{backgroundColor: 'white'}}>
+                                <Right>
+                                    <TouchableHighlight
+                                        style={{paddingHorizontal: 12}}
+                                        onPress={() => this.showViewBillModal(!this.state.viewBillVisible)}
+                                    >
+                                        <Text style={{color: theme.colors.primary}}>Close</Text>
+                                    </TouchableHighlight>
+                                </Right>
+                            </Header>
+
+                            <View style={{marginTop: 8}}>
+                                {this.props.orders.data.length != null && this.props.orders.data.map((item, index) => (
+                                    <View style={{flexDirection: 'row', justifyContent: 'space-between', paddingHorizontal: 16, paddingVertical: 4}} key={index}>
+                                        <Text style={{flex: 1, color: item.status == 0 ? 'red' : 'green'}}>{item.status == 0 ? 'WAITING' : 'SENT'}</Text>
+                                        <Text style={{flex: 1, textTransform: 'capitalize'}}>{item.name}</Text>
+                                        <Text style={{flex: 1, textAlign: 'right'}}>{'x' + item.qty}</Text>
+                                        <Text style={{flex: 1, textAlign: 'right'}}>{item.totalPrice}</Text>
+                                    </View>
+                                ))}
+                            </View>
+
+                            <View style={{position: 'absolute', bottom: 0, left: 0, right: 0, backgroundColor: 'white'}}>
+                                <View style={{paddingVertical: 8, paddingHorizontal: 16, backgroundColor: '#eaeaea'}}>
+                                    <View style={{flexDirection: 'row'}}>
+                                        <Text style={{flex: 1, textAlign: 'right'}}>Sub Total</Text>
+                                        <Text style={{width: 100, textAlign: 'right'}}>{this.props.transactions.data.subTotal}</Text>
+                                    </View>
+                                    <View style={{flexDirection: 'row'}}>
+                                        <Text style={{flex: 1, textAlign: 'right'}}>Discount</Text>
+                                        <Text style={{width: 100, textAlign: 'right'}}>{this.props.transactions.data.discount}</Text>
+                                    </View>
+                                    <View style={{flexDirection: 'row'}}>
+                                        <Text style={{flex: 1, textAlign: 'right'}}>Service Charge (5%)</Text>
+                                        <Text style={{width: 100, textAlign: 'right'}}>{this.props.transactions.data.serviceCharge}</Text>
+                                    </View>
+                                    <View style={{flexDirection: 'row'}}>
+                                        <Text style={{flex: 1, textAlign: 'right'}}>Tax (10%)</Text>
+                                        <Text style={{width: 100, textAlign: 'right'}}>{this.props.transactions.data.tax}</Text>
+                                    </View>
+                                    <View style={{flexDirection: 'row'}}>
+                                        <Text style={{flex: 1, textAlign: 'right', fontWeight: 'bold'}}>TOTAL</Text>
+                                        <Text style={{width: 100, textAlign: 'right', fontWeight: 'bold'}}>Rp {this.props.transactions.data.total}</Text>
+                                    </View>
+                                </View>
+
+                                <TouchableHighlight style={{backgroundColor: theme.colors.primary, height: 40, justifyContent: 'center', alignItems: 'center', margin: 8}} onPress={() => {
+                                    this.showViewBillModal(!this.state.viewBillVisible)
+                                    this.props.navigation.navigate('OrderDone')
+                                }}>
+                                    <Text style={{color: 'white', fontWeight: 'bold'}}>CALL BILL</Text>
+                                </TouchableHighlight>
+                            </View>
+                        </View>
+                    </View>
+                </Modal> */}
+
                 <Header style={{backgroundColor: theme.colors.primary}}>
                     <StatusBar backgroundColor={theme.colors.primary} barStyle="light-content" />
                     <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', width: '100%'}}>
@@ -192,6 +291,16 @@ class ChooseMenu extends Component {
                                     key={index}
                                     onPress={() => this.addOrderItem(item, transactionId)}
                                 />
+                                // <TouchableOpacity key={index}
+                                //     style={[styles.menu, {borderColor: 'black'}]}
+                                //     onPress={() => this.addOrderItem(item, transactionId)}
+                                // >
+                                //     <Image source={{ uri: item.image }} style={{width: 50, height: 50}} />
+                                //     <View>
+                                //         <Text style={{textTransform: 'capitalize'}}>{item.name}</Text>
+                                //         <Text>{item.price}</Text>
+                                //     </View>
+                                // </TouchableOpacity>
                             ))}
 
                             {/* No Menu */}
@@ -200,7 +309,32 @@ class ChooseMenu extends Component {
                             ) : null}
                         {/* </List> */}
                     </Content>
-
+                    
+                    {/* <View>
+                        <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
+                            <Button primary
+                                style={{height: 40, justifyContent: 'center', flex: 1}}
+                                disabled={this.props.orders.data.length == 0 ? true : false}
+                                onPress={() => this.showConfirmModal(!this.state.confirmVisible)}
+                            >
+                                <Text style={{color: 'white'}}>Confirm</Text>
+                            </Button>
+                            <Button primary
+                                style={{height: 40, justifyContent: 'center', flex: 1, marginHorizontal: 8}}
+                                disabled={this.props.orders.data.length == 0 ? true : false}
+                            >
+                                <Text style={{color: 'white'}}>Call</Text>
+                            </Button>
+                            <Button primary
+                                style={{height: 40, justifyContent: 'center', flex: 1}}
+                                disabled={this.state.viewBillDisabled}
+                                onPress={() => this.props.navigation.navigate('OrderDetail')}
+                                // onPress={() => this.showViewBillModal(!this.state.viewBillVisible)}
+                            >
+                                <Text style={{color: 'white'}}>View Bill</Text>
+                            </Button>
+                        </View>
+                    </View> */}
                     {this.props.orders.data.length != 0
                     ?
                         <Button
@@ -264,6 +398,7 @@ const mapDispatchToProps = dispatch => {
 
         // Transaction
         getTransaction: (dataTransaction) => dispatch(actionTransaction.getTransaction(dataTransaction)),
+        // addTransaction: (dataTransaction) => dispatch(actionTransaction.addTransaction(dataTransaction))
     }
 }
 
@@ -278,7 +413,9 @@ const styles = StyleSheet.create({
         justifyContent: 'center'
     },
     menu: {
+        // padding: 8,
         borderWidth: 1,
+        // borderRadius: 4,
         marginVertical: 8,
         flexDirection: 'row'
     }

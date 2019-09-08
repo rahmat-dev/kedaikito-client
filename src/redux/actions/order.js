@@ -45,16 +45,20 @@ export const removeOrderPending = () => {
     }
 }
 
-export const addQuantity = (menuId) => {
+export const addQuantity = (menuId, price) => {
     return {
         type: 'ADD_QUANTITY',
-        payload: menuId
+        payload: {
+            menuId, price
+        }
     }
 }
 
-export const removeQuantity = (menuId) => {
+export const removeQuantity = (menuId, price) => {
     return {
         type: 'REMOVE_QUANTITY',
-        payload: menuId
+        payload: {
+            menuId, price
+        }
     }
 }

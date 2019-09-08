@@ -1,5 +1,7 @@
 const initialState = {
     data: [],
+    qtyTotal: 0,
+    priceTotal: 0,
     isLoading: false
 }
 
@@ -9,25 +11,15 @@ const orders = (state = initialState, action) => {
             return {
                 ...state,
                 data: state.data.concat(action.payload),
+                qtyTotal: state.qtyTotal + 1,
+                priceTotal: state.priceTotal + action.payload.totalPrice,
                 isLoading: false
             }
             
-        case 'ADD_ORDER_PENDING':
-            return {
-                ...state,
-                isLoading: true
-            }
-                
         case 'GET_ORDER':
             return {
                 ...state,
                 isLoading: false
-            }
-
-        case 'GET_ORDER_PENDING':
-            return {
-                ...state,
-                isLoading: true
             }
 
         case 'REMOVE_ORDER':
@@ -37,17 +29,11 @@ const orders = (state = initialState, action) => {
                 isLoading: false
             }
 
-        case 'REMOVE_ORDER_PENDING':
-            return {
-                ...state,
-                isLoading: true
-            }
-
         case 'ADD_QUANTITY':
             return {
                 ...state,
-                data: state.data.map((item, index) => {
-                    if (item.menuId == action.payload) {
+                data: state.data.map(item => {
+                    if (item.menuId == action.payload.menuId) {
                         return {
                             ...item,
                             totalPrice: item.pricePerItem * (item.qty + 1),
@@ -57,14 +43,16 @@ const orders = (state = initialState, action) => {
 
                     return item
                 }),
+                qtyTotal: state.qtyTotal + 1,
+                priceTotal: state.priceTotal + action.payload.price,
                 isLoading: false
             }
 
         case 'REMOVE_QUANTITY':
             return {
                 ...state,
-                data: state.data.map((item, index) => {
-                    if (item.menuId == action.payload) {
+                data: state.data.map(item => {
+                    if (item.menuId == action.payload.menuId) {
                         return {
                             ...item,
                             totalPrice: item.pricePerItem * (item.qty - 1),

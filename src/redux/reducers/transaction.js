@@ -5,7 +5,7 @@ const initialState = {
 
 const transactions = (state = initialState, action) => {
     switch (action.type) {
-        case 'ADD_TRANSACTION':
+        case 'GET_TRANSACTION':
             return {
                 ...state,
                 data: action.payload,

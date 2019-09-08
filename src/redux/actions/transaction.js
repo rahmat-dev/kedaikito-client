@@ -1,6 +1,6 @@
-export const addTransaction = (dataTransaction) => {
+export const getTransaction = (dataTransaction) => {
     return {
-        type: 'ADD_TRANSACTION',
+        type: 'GET_TRANSACTION',
         payload: dataTransaction
     }
 }
