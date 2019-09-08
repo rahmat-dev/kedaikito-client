@@ -9,12 +9,12 @@ This project is still on very early development stage. If you want to use for pr
 ## Screenshots
 
 <p float="left">
-<img src="https://res.cloudinary.com/rahmat-st/image/upload/v1567930033/kedaikito-1.jpg" width="240" height="360" alt="KedaiKito Splash"/>
-<img src="https://res.cloudinary.com/rahmat-st/image/upload/v1567930033/kedaikito-2.jpg" width="240" height="360" alt="KedaiKito Choose Table"/>
-<img src="https://res.cloudinary.com/rahmat-st/image/upload/v1567930033/kedaikito-3.jpg" width="240" height="360" alt="KedaiKito Choose Menu"/>
-<img src="https://res.cloudinary.com/rahmat-st/image/upload/v1567930033/kedaikito-4.jpg" width="240" height="360" alt="KedaiKito Detail Order"/>
-<img src="https://res.cloudinary.com/rahmat-st/image/upload/v1567930033/kedaikito-5.jpg" width="240" height="360" alt="KedaiKito View Bill"/>
-<img src="https://res.cloudinary.com/rahmat-st/image/upload/v1567930033/kedaikito-6.jpg" width="240" height="360" alt="KedaiKito Order Done"/>
+<img src="https://res.cloudinary.com/rahmat-st/image/upload/v1567930033/KedaiKito/kedaikito-1.jpg" width="240" height="360" alt="KedaiKito Splash"/>
+<img src="https://res.cloudinary.com/rahmat-st/image/upload/v1567930033/KedaiKito/kedaikito-2.jpg" width="240" height="360" alt="KedaiKito Choose Table"/>
+<img src="https://res.cloudinary.com/rahmat-st/image/upload/v1567930033/KedaiKito/kedaikito-3.jpg" width="240" height="360" alt="KedaiKito Choose Menu"/>
+<img src="https://res.cloudinary.com/rahmat-st/image/upload/v1567930033/KedaiKito/kedaikito-4.jpg" width="240" height="360" alt="KedaiKito Detail Order"/>
+<img src="https://res.cloudinary.com/rahmat-st/image/upload/v1567930033/KedaiKito/kedaikito-5.jpg" width="240" height="360" alt="KedaiKito View Bill"/>
+<img src="https://res.cloudinary.com/rahmat-st/image/upload/v1567930033/KedaiKito/kedaikito-6.jpg" width="240" height="360" alt="KedaiKito Order Done"/>
 </p>
 
 ## Features
