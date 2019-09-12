@@ -4,13 +4,15 @@ import categories from './reducers/category';
 import menus from './reducers/menu';
 import orders from './reducers/order';
 import transactions from './reducers/transaction';
+import timers from './reducers/timer';
 import { logger } from './middleware';
 
 const reducers = combineReducers({
     categories,
     menus,
     orders,
-    transactions
+    transactions,
+    timers,
 })
 
 const store = createStore(

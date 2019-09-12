@@ -1,0 +1,1 @@
+export default priceFormat = (price) => 'Rp ' + price.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1.')

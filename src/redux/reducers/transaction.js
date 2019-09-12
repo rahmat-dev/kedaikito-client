@@ -8,6 +8,12 @@ const transactions = (state = initialState, action) => {
         case 'GET_TRANSACTION':
             return {
                 ...state,
+                isLoading: false
+            }
+
+        case 'ADD_TRANSACTION':
+            return {
+                ...state,
                 data: action.payload,
                 isLoading: false
             }

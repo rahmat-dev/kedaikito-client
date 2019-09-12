@@ -33,8 +33,8 @@ const StackNavigator = createStackNavigator(
 const SwitchNavigator = createSwitchNavigator(
   {
     Welcome: { screen: WelcomeScreen },
-    MainApp: StackNavigator
-  }
+    MainApp: StackNavigator,
+  },
 )
 
 const AppContainer = createAppContainer(SwitchNavigator)
